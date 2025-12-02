@@ -25,6 +25,7 @@ interface IUserProviderValues {
   isLoading: boolean;
   setUser: (user: IUser | null) => void;
   setIsLoading: Dispatch<SetStateAction<boolean>>;
+  refetchUser: () => Promise<void>;
 }
 
 const UserContext = createContext<IUserProviderValues | undefined>(undefined);
@@ -33,10 +34,24 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<IUser | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
+  const fetchUser = async () => {
+    try {
+      const currentUser = await getCurrentUser();
+      setUser(currentUser);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const refetchUser = async () => {
+    setIsLoading(true);
+    await fetchUser();
+  };
+
   useEffect(() => {
     let isMounted = true;
 
-    const fetchUser = async () => {
+    const loadUser = async () => {
       try {
         const currentUser = await getCurrentUser();
         if (isMounted) {
@@ -49,7 +64,7 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
       }
     };
 
-    fetchUser();
+    loadUser();
 
     return () => {
       isMounted = false;
@@ -57,7 +72,7 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
   }, []);
 
   return (
-    <UserContext.Provider value={{ user, setUser, isLoading, setIsLoading }}>
+    <UserContext.Provider value={{ user, setUser, isLoading, setIsLoading, refetchUser }}>
       {children}
     </UserContext.Provider>
   );
