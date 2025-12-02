@@ -1,7 +1,7 @@
 'use client';
 
 import { SalesTableProps } from '@/types/SalesType';
-import { ChevronDown, ChevronUp, ArrowUpDown } from 'lucide-react';
+import { ChevronDown, ChevronUp, ArrowUpDown, ChevronRight } from 'lucide-react';
 
 
 export default function SalesTable({
@@ -134,7 +134,7 @@ export default function SalesTable({
                             className="inline-flex items-center gap-2 rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-50"
                         >
                             Next
-                            <ChevronUp className="h-4 w-4 -rotate-90" />
+                            <ChevronRight className="h-4 w-4" />
                         </button>
                     </div>
                 </div>
