@@ -48,6 +48,7 @@ export default function SalesTable({
                                     <button
                                         onClick={() => onSort('date')}
                                         className="rounded p-1 transition hover:bg-slate-200"
+                                        title="Sort by date"
                                     >
                                         {getSortIcon('date')}
                                     </button>
@@ -68,6 +69,7 @@ export default function SalesTable({
                                     <button
                                         onClick={() => onSort('price')}
                                         className="rounded p-1 transition hover:bg-slate-200"
+                                        title="Sort by amount"
                                     >
                                         {getSortIcon('price')}
                                     </button>
