@@ -22,17 +22,18 @@ const SignInForm = () => {
         mode: 'onChange',
     });
 
-    const { setIsLoading } = useUser();
+    const { setUser, setIsLoading } = useUser();
     const router = useRouter();
 
     const onSubmit = async (data: SignInFormData) => {
         try {
             const res = await loginUser(data);
-            console.log(res);
+           
 
             if (res?.token) {
                 toast.success("user Login successfully");
-                setIsLoading(true)
+                setUser(null);
+                setIsLoading(true);
                 setTimeout(() => {
                     router.push("/");
                 }, 1000);

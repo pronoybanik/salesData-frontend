@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Sales Sata App",
+  title: "Sales Data App",
   description: "sales data ",
 };
 
