@@ -33,7 +33,9 @@ const SignInForm = () => {
             if (res?.token) {
                 toast.success("user Login successfully");
                 setIsLoading(true)
-                router.push("/");
+                setTimeout(() => {
+                    router.push("/");
+                }, 1000);
             } else {
                 toast.error(res?.message);
             }
