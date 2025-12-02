@@ -1,9 +1,9 @@
 'use client';
 
+import { useUser } from '@/context/UserContext';
 import { loginUser } from '@/services/AuthServices';
 import Link from 'next/link';
-import { useRouter, useSearchParams } from 'next/navigation';
-
+import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 
@@ -22,8 +22,7 @@ const SignInForm = () => {
         mode: 'onChange',
     });
 
-    const searchParams = useSearchParams();
-    const redirect = searchParams.get("redirectPath");
+    const { setIsLoading } = useUser();
     const router = useRouter();
 
     const onSubmit = async (data: SignInFormData) => {
@@ -33,16 +32,15 @@ const SignInForm = () => {
 
             if (res?.token) {
                 toast.success("user Login successfully");
-                if (redirect) {
-                    router.push(redirect);
-                } else {
-                    router.push("/");
-                }
+                setIsLoading(true)
+                router.push("/");
             } else {
                 toast.error(res?.message);
             }
-        } catch (error: any) {
-            console.log(error);
+        } catch (error) {
+            const message = error instanceof Error ? error.message : 'An unexpected error occurred';
+            console.error(message);
+            toast.error(message);
         }
     };
 
